@@ -9,9 +9,12 @@ export async function createClient() {
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: (list) => {
-          try { list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)); }
-          catch { /* เรียกจาก Server Component — ปล่อยให้ middleware จัดการ */ }
+        // ระบุ Type ให้ list เหมือนที่เคยแก้ใน middleware
+        setAll: (list: { name: string; value: string; options?: any }[]) => {
+          try { 
+            list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)); 
+          }
+          catch { /* เรียกจาก Server Component — middleware จะ refresh ให้ */ }
         },
       },
     },
