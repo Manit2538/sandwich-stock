@@ -1,4 +1,4 @@
-# 🥪 Sandwich Stock & Profit
+# 🥪 Sandwich Stock & Profit   
 
 ระบบจัดการต้นทุน สต็อก และกำไร สำหรับร้านแซนวิชย่างเดลิเวอรีขนาดเล็ก
 Mobile-first · ภาษาไทย · PWA · เงินบาท (฿) · เวลา Asia/Bangkok
