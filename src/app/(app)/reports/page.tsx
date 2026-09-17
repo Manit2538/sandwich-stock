@@ -4,6 +4,8 @@ import { summarizePeriod } from '@/lib/profit';
 import { fmtBaht, fmtPct, fmtDate, todayBkk } from '@/lib/format';
 import { D, money } from '@/lib/decimal';
 import Link from 'next/link';
+import ExportButton from '@/components/ExportButton';
+
 
 export const dynamic = 'force-dynamic';
 
@@ -63,8 +65,36 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
 
   const TABS = [{ k: 'day', l: 'วันนี้' }, { k: 'week', l: '7 วัน' }, { k: 'month', l: 'เดือนนี้' }];
 
+// ── ข้อมูลสำหรับ Export ──
+const exportDaily = (daily ?? []).map((d: any) => ({
+  วันที่: d.biz_date,
+  ยอดขายรวม: Number(d.gross_sales ?? 0),
+  ส่วนลดร้าน: Number(d.shop_discount ?? 0),
+  ยอดสุทธิ: Number(d.net_sales ?? 0),
+  ต้นทุน: Number(d.cogs ?? 0),
+  ค่าคอมมิชชัน: Number(d.commission ?? 0),
+  ค่าธรรมเนียมอื่น: Number(d.other_fees ?? 0),
+  กำไรขั้นต้น: Number(d.net_sales ?? 0) - Number(d.cogs ?? 0),
+}));
+
+const exportMenu = Array.from(byMenu.entries()).map(([name, v]: any) => ({
+  เมนู: name,
+  จำนวนที่ขาย: Number(v.qty ?? 0),
+  ยอดขาย: Number(v.revenue ?? 0),
+  ต้นทุน: Number(v.cogs ?? 0),
+  กำไร: Number(v.revenue ?? 0) - Number(v.cogs ?? 0),
+}));
+
   return (
     <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+  <h1 className="text-lg font-bold">Export Data</h1>
+  <div className="flex gap-2">
+    <ExportButton rows={exportDaily} filename={`กำไรรายวัน-${period}`} label="⬇️ รายวัน" />
+    <ExportButton rows={exportMenu} filename={`กำไรรายเมนู-${period}`} label="⬇️ รายเมนู" />
+  </div>
+</div>
+
       <h1 className="text-lg font-bold">รายงานกำไร</h1>
 
       <div className="grid grid-cols-3 gap-2 rounded-xl bg-stone-100 p-1 dark:bg-stone-800">

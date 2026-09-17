@@ -26,3 +26,81 @@
   .pill-danger { @apply pill bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300; }
   .wip { @apply pill bg-stone-200 text-stone-600 dark:bg-stone-800 dark:text-stone-400; }
 }
+
+@layer components {
+  .nav-fab {
+    @apply fixed top-3 right-3 z-[60] flex flex-col justify-center gap-[5px]
+           w-11 h-11 px-[11px] rounded-xl cursor-pointer
+           bg-white/90 ring-1 ring-stone-300 backdrop-blur
+           dark:bg-stone-900/90 dark:ring-stone-700;
+  }
+  .nav-fab span {
+    @apply block w-full h-[2px] rounded-full bg-stone-800 dark:bg-stone-100;
+  }
+  .nav-overlay {
+    @apply fixed inset-0 z-[70] bg-black/50;
+  }
+  .nav-drawer {
+    @apply fixed top-0 right-0 z-[80] h-[100dvh] w-[280px] max-w-[85vw]
+           p-4 overflow-y-auto translate-x-[105%] transition-transform duration-300
+           bg-white ring-1 ring-stone-200
+           dark:bg-stone-900 dark:ring-stone-800;
+  }
+  .nav-drawer.open {
+    @apply translate-x-0;
+  }
+  .nav-drawer-head {
+    @apply flex items-center justify-between mb-3
+           text-base font-semibold text-stone-900 dark:text-stone-100;
+  }
+  .nav-close {
+    @apply px-2 py-1 text-xl leading-none
+           text-stone-500 hover:text-stone-900
+           dark:hover:text-stone-100;
+  }
+  .nav-list {
+    @apply flex flex-col gap-2;
+  }
+  .nav-item {
+    @apply block px-3.5 py-3 rounded-xl text-[15px]
+           border border-stone-200 bg-stone-50 text-stone-800
+           hover:bg-stone-100
+           dark:border-stone-800 dark:bg-stone-950 dark:text-stone-200
+           dark:hover:bg-stone-800;
+  }
+  .nav-item.active {
+    @apply font-semibold bg-brand/10 border-brand text-brand;
+  }
+}
+
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1rem !important;
+  height: 1rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}

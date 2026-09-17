@@ -1,5 +1,7 @@
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import AppNav from '@/components/AppNav';
 
 export const metadata: Metadata = {
   title: 'Sandwich Stock & Profit',
@@ -26,7 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AppNav /> 
+        {children}
+        </body>
     </html>
   );
 }

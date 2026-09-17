@@ -58,3 +58,31 @@ export async function cancelSale(fd: FormData) {
   revalidatePath('/sales');
   revalidatePath('/dashboard');
 }
+
+
+export async function refundSale(fd: FormData) {
+  const { storeId } = await requireStore();
+  const supabase = await createClient();
+
+  const orderId = String(fd.get('order_id') ?? '');
+  const loss = Number(fd.get('refund_loss') ?? 0);
+  const restocked = fd.get('refund_restocked') === 'on';
+  const note = (fd.get('refund_note') as string) || null;
+
+  if (!orderId) return;
+
+  await supabase
+    .from('sales_orders')
+    .update({
+      is_refunded: true,
+      refund_restocked: restocked,
+      refund_loss: loss,
+      refund_note: note,
+      refunded_at: new Date().toISOString(),
+    })
+    .eq('id', orderId)
+    .eq('store_id', storeId);
+
+  revalidatePath('/sales');
+  revalidatePath('/dashboard');
+}

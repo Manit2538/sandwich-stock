@@ -6,5 +6,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icons|manifest.webmanifest|sw.js).*)'],
+  matcher: [
+    /*
+     * อัปเดต matcher ให้ยกเว้น path สำหรับลูกค้า (เช่น /order)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|icons|manifest.webmanifest|sw.js|order/.*).*)',
+  ],
 };
