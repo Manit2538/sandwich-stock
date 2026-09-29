@@ -4,12 +4,16 @@ import { requireStore } from '@/lib/supabase/queries';
 import { createClient } from '@/lib/supabase/server';
 import { fmtBaht, fmtQty, fmtDateTime } from '@/lib/format';
 import { togglePurchased } from './actions';
+import PrintShoppingReceipt from '@/components/PrintShoppingReceipt';
+
+
+
 
 export const dynamic = 'force-dynamic';
 
 export default async function ShoppingListPage({ searchParams }: { searchParams: Promise<{ list?: string }> }) {
   const sp = await searchParams;
-  const { storeId } = await requireStore();
+  const { storeId, store } = await requireStore();
   const supabase = await createClient();
 
   let q = supabase.from('shopping_lists')
@@ -22,13 +26,16 @@ export default async function ShoppingListPage({ searchParams }: { searchParams:
   const { data } = await q;
   const list = data?.[0];
 
-  if (!list) return (
+  if (!list) {
+    return (
     <div className="space-y-4">
       <h1 className="text-lg font-bold">รายการซื้อของ</h1>
       <Empty text="ยังไม่มีรายการซื้อของ" hint="สร้างจากหน้า “วางแผนขายวันนี้”" />
       <Link href="/plan" className="btn-primary w-full">ไปหน้าวางแผนขาย</Link>
     </div>
   );
+}
+
 
   const items = (list.shopping_list_items ?? []).sort((a: any, b: any) => Number(b.qty_short) - Number(a.qty_short));
   const bought = items.filter((i: any) => i.is_purchased).length;
@@ -43,6 +50,8 @@ export default async function ShoppingListPage({ searchParams }: { searchParams:
         <p className="mt-2">งบประมาณรวม: <b className="text-base">{fmtBaht(list.estimated_total)}</b></p>
         <p className="text-stone-500">ซื้อแล้ว {bought}/{items.length} รายการ</p>
       </div>
+
+                  <PrintShoppingReceipt list={list} shop={store} />
 
       <ul className="space-y-2">
         {items.map((it: any) => (

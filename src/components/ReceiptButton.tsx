@@ -85,6 +85,19 @@ td { padding: 2px 0; vertical-align: top; }
   ${Number(p.discount ?? 0) > 0 ? `<div class="sum"><span>ส่วนลด</span><span>-${baht(p.discount!)}</span></div>` : ''}
   <div class="sum total"><span>ยอดสุทธิ</span><span>฿${baht(p.netSales ?? 0)}</span></div>
   ${p.note ? `<div class="foot">หมายเหตุ: ${p.note}</div>` : ''}
+
+
+<div style="margin-top: 16px; border-top: 1px dashed #ccc; padding-top: 12px; text-align: center;">
+  <div style="font-size: 12px; font-weight: bold; margin-bottom: 4px;">สแกนชำระเงิน ${baht(p.netSales ?? 0)}</div>
+  <img 
+    src="https://promptpay.io/0649966662/${p.netSales ?? 0}.png" 
+    alt="PromptPay QR" 
+    style="width: 128px; height: 128px; margin: 0 auto; object-fit: contain;" 
+  />
+  <div style="font-size: 10px; color: #666; margin-top: 4px;">พร้อมเพย์: 064-996-6662</div>
+</div>
+
+
   <div class="center foot">ขอบคุณที่ใช้บริการ</div>
 </body></html>`;
 

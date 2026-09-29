@@ -1,6 +1,7 @@
 import { requireStore } from '@/lib/supabase/queries';
 import { createClient } from '@/lib/supabase/server';
 import SettingsForm from './SettingsForm';
+import SettingsClient from './SettingsClient';
 import { addSupplier } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -34,6 +35,9 @@ export default async function SettingsPage() {
           <button className="btn-ghost w-full">เพิ่มร้าน</button>
         </form>
       </section>
+
+      <SettingsClient storeId={storeId} />
+
 
       <section className="card text-sm text-stone-500">
         <p className="font-semibold text-stone-700 dark:text-stone-300">ℹ️ หมายเหตุการเชื่อมต่อ</p>

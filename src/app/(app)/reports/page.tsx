@@ -5,6 +5,7 @@ import { fmtBaht, fmtPct, fmtDate, todayBkk } from '@/lib/format';
 import { D, money } from '@/lib/decimal';
 import Link from 'next/link';
 import ExportButton from '@/components/ExportButton';
+import ReportsClient from './ReportsClient';
 
 
 export const dynamic = 'force-dynamic';
@@ -16,6 +17,7 @@ function rangeOf(period: string) {
   if (period === 'month') return [today.slice(0, 8) + '01', today];
   return [today, today];
 }
+
 
 export default async function ReportsPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const sp = await searchParams;
@@ -156,6 +158,7 @@ const exportMenu = Array.from(byMenu.entries()).map(([name, v]: any) => ({
       <p className="card text-sm text-stone-500">
         📈 กราฟแนวโน้มย้อนหลัง — <span className="wip">อยู่ระหว่างพัฒนา (Phase 2)</span>
       </p>
+      <ReportsClient storeId={storeId} />
     </div>
   );
 }

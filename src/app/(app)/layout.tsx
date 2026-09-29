@@ -36,7 +36,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
       <main className="mx-auto max-w-lg px-4 py-4">{children}</main>
 
-      <div className="mx-auto max-w-lg px-4 pb-6">
+      {/* <div className="mx-auto max-w-lg px-4 pb-6">
         <details className="card">
           <summary className="cursor-pointer font-semibold">เมนูทั้งหมด</summary>
           <ul className="mt-3 grid grid-cols-2 gap-2">
@@ -47,7 +47,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             ))}
           </ul>
         </details>
-      </div>
+      </div>*/}
 
       <BottomNav />
     </div>
