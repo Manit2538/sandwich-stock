@@ -18,7 +18,6 @@ function rangeOf(period: string) {
   return [today, today];
 }
 
-
 export default async function ReportsPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const sp = await searchParams;
   const period = sp.period ?? 'day';
@@ -92,6 +91,12 @@ const exportMenu = Array.from(byMenu.entries()).map(([name, v]: any) => ({
       <div className="flex flex-wrap items-center justify-between gap-2">
   <h1 className="text-lg font-bold">Export Data</h1>
   <div className="flex gap-2">
+        <Link
+  href="/reports/tax"
+  className="rounded-lg bg-gray-800 order border-gray-700 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-gray-700 transition"
+>
+  📄 ไปหน้ายื่นภาษี
+</Link>
     <ExportButton rows={exportDaily} filename={`กำไรรายวัน-${period}`} label="⬇️ รายวัน" />
     <ExportButton rows={exportMenu} filename={`กำไรรายเมนู-${period}`} label="⬇️ รายเมนู" />
   </div>
