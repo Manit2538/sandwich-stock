@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'เหมียวปิ้ง แซนวิช' },
   icons: {
-  icon: [{ url: '/logo-receipt.png', sizes: '512x512', type: 'image/png' }],
-  apple: [{ url: '/logo-receipt.png', sizes: '512x512', type: 'image/png' }],
+  icon: [{ url: '/logo-icon.png', sizes: '512x512', type: 'image/png' }],
+  apple: [{ url: '/logo-icon.png', sizes: '512x512', type: 'image/png' }],
 },
 
  
