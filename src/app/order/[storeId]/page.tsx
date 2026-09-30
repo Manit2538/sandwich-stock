@@ -344,7 +344,7 @@ function OrderInner() {
       <div className="mb-4 mt-2 flex justify-center">
         {isCompany ? (
           <span className="rounded-full bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-400">
-            🏢 สั่งในบริษัท · เราเดินไปส่งให้
+            🏢 สั่งในบริษัท · เราเดินไปส่งให้ ปิดรับออเดอร์ 22:00 น.
           </span>
         ) : (
           <span className="rounded-full bg-green-500/15 px-3 py-1 text-xs font-semibold text-green-400">

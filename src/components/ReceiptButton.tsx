@@ -94,6 +94,7 @@ td { padding: 2px 0; vertical-align: top; }
     alt="PromptPay QR" 
     style="width: 128px; height: 128px; margin: 0 auto; object-fit: contain;" 
   />
+  <div style="font-size: 10px; color: #666; margin-top: 4px;">มานิตย์ สมวันดี</div>
   <div style="font-size: 10px; color: #666; margin-top: 4px;">พร้อมเพย์: 064-996-6662</div>
 </div>
 
