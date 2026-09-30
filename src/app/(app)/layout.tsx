@@ -24,7 +24,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-dvh pb-20">
       <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur dark:border-stone-800 dark:bg-stone-950/95">
         <div className="mx-auto flex max-w-lg items-center gap-2 px-4 py-3">
-          <span className="text-2xl">🥪</span>
+          <img src="https://raw.githubusercontent.com/Manit2538/sandwich-stock/main/public/logo-receipt.png" alt="Logo" className="h-20 w-20 rounded-full object-contain" />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-bold">{store.name}</p>
             <p className="text-[11px] text-stone-500">เวลาไทย (Asia/Bangkok)</p>

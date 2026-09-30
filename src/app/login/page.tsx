@@ -9,9 +9,11 @@ export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center p-6">
       <div className="mb-6 text-center">
-        <p className="text-5xl">🥪</p>
-        <h1 className="mt-2 text-2xl font-bold">Sandwich Stock &amp; Profit</h1>
-        <p className="text-sm text-stone-500">จัดการต้นทุน สต็อก และกำไร ในที่เดียว</p>
+      <div className="mb-6 flex justify-center">
+      <img src="https://raw.githubusercontent.com/Manit2538/sandwich-stock/main/public/logo-receipt.png" alt="Logo" className="h-40 w-40 object-contain" />
+      </div>        
+      <h1 className="mt-2 text-2xl font-bold">Sandwich Stock &amp; Profit</h1>
+        <p className="text-sm text-stone-500">ระบบจัดการต้นทุน สต็อก และกำไร ในที่เดียว</p>
       </div>
 
       <div className="card">

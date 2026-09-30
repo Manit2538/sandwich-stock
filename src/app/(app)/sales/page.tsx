@@ -87,10 +87,17 @@ const exportRows = (orders ?? []).map((o: any) => ({
               <li key={o.id} className="card text-sm">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-semibold">{o.delivery_platforms?.name ?? 'อื่น ๆ'}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-semibold">{o.delivery_platforms?.name ?? 'อื่น ๆ'}</p>
+                      {o.order_no && (
+                        <span className="rounded bg-stone-800 px-1.5 py-0.5 text-[10px] font-mono text-emerald-400">
+                          {o.order_no}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-stone-500">{fmtDateTime(o.occurred_at)}</p>
-                  </div>
-                  <span className={o.status === 'completed' ? 'pill-ok' : 'pill-danger'}>
+                    {o.note && <p className="text-xs text-stone-400 mt-0.5">หมายเหตุ: {o.note}</p>}
+                  </div>                  <span className={o.status === 'completed' ? 'pill-ok' : 'pill-danger'}>
                     {o.status === 'completed' ? '✅ สำเร็จ' : o.status === 'cancelled' ? '❌ ยกเลิก' : '↩️ คืนเงิน'}
                   </span>
                 </div>
