@@ -4,10 +4,16 @@ import './globals.css';
 import AppNav from '@/components/AppNav';
 
 export const metadata: Metadata = {
-  title: 'Sandwich Stock & Profit',
-  description: 'ระบบจัดการต้นทุน สต็อก และกำไร สำหรับร้านแซนวิชย่างเดลิเวอรี',
+  title: 'เหมียวปิ้ง แซนวิช',
+  description: 'ระบบจัดการต้นทุน สต็อก และกำไร สำหรับร้านแซนวิชเดลิเวอรี่',
   manifest: '/manifest.webmanifest',
-  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Sandwich Stock' },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'เหมียวปิ้ง แซนวิช' },
+  icons: {
+  icon: [{ url: '/logo-receipt.png', sizes: '512x512', type: 'image/png' }],
+  apple: [{ url: '/logo-receipt.png', sizes: '512x512', type: 'image/png' }],
+},
+
+ 
 };
 
 export const viewport: Viewport = {
