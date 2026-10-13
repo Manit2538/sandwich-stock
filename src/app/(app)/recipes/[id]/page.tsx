@@ -3,11 +3,18 @@ import { requireStore } from '@/lib/supabase/queries';
 import { createClient } from '@/lib/supabase/server';
 import { calcMenuCost, calcMargin, suggestPrice } from '@/lib/costing';
 import { fmtBaht, fmtPct, fmtQty } from '@/lib/format';
-import { addRecipeItem, removeRecipeItem, updateMenuPrices } from '../actions';
+import { addRecipeItem, removeRecipeItem, updateMenuPrices, deleteMenuItem } from '../actions';
 import RecipeItemForm from './RecipeItemForm';
 import StatusPill from '@/components/StatusPill';
 
 export const dynamic = 'force-dynamic';
+
+function roundNice(n: number) {
+  const r = Math.ceil(n);
+  const last = r % 10;
+  if (last === 0 || last === 9) return r;
+  return last <= 4 ? r - last + 5 : r - last + 9;
+}
 
 export default async function RecipeDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -113,13 +120,21 @@ export default async function RecipeDetail({ params }: { params: Promise<{ id: s
             <input id="base_price" name="base_price" type="number" step="0.01" min="0"
               defaultValue={menu.base_price} inputMode="decimal" />
           </div>
-          {(platforms ?? []).filter((p: any) => p.code !== 'walkin').map((p: any) => (
-            <div key={p.id}>
-              <label htmlFor={`price_${p.id}`}>{p.name} (฿) — ค่าคอม {fmtPct(p.commission_pct)}</label>
-              <input id={`price_${p.id}`} name={`price_${p.id}`} type="number" step="0.01" min="0"
-                defaultValue={priceMap.get(p.id) ?? ''} inputMode="decimal" />
-            </div>
-          ))}
+          {(platforms ?? []).filter((p: any) => p.code !== 'walkin').map((p: any) => {
+            const comm = Number(p.commission_pct ?? 0);
+            const base = Number(menu.base_price ?? 0);
+            const suggested = comm <= 0 ? Math.ceil(base) : roundNice(base / (1 - comm / 100));
+            return (
+              <div key={p.id} className="rounded-lg bg-stone-50 p-3 dark:bg-stone-900">
+                <div className="flex justify-between text-xs text-stone-500 mb-1">
+                  <span>{p.name} (ค่าคอม {fmtPct(p.commission_pct)})</span>
+                  <span>แนะนำ: ฿{suggested}</span>
+                </div>
+                <input id={`price_${p.id}`} name={`price_${p.id}`} type="number" step="0.01" min="0"
+                  defaultValue={priceMap.get(p.id) ?? ''} inputMode="decimal" className="w-full" />
+              </div>
+            );
+          })}
           <div>
             <label htmlFor="target_margin_pct">เป้ากำไรขั้นต่ำ (%)</label>
             <input id="target_margin_pct" name="target_margin_pct" type="number" step="0.1" min="0" max="99"
@@ -130,6 +145,19 @@ export default async function RecipeDetail({ params }: { params: Promise<{ id: s
             <span className="text-sm">เปิดขายเมนูนี้</span>
           </label>
           <button className="btn-primary w-full">บันทึกราคา</button>
+        </form>
+      </section>
+
+      <section className="card border-red-500/30 bg-red-500/5">
+        <h2 className="mb-2 font-semibold text-red-500">⚠️ พื้นที่อันตราย</h2>
+        <p className="text-xs text-stone-500 mb-3">การลบเมนูจะลบสูตรและประวัติราคาที่ผูกไว้ทั้งหมดอย่างถาวร</p>
+        <form action={async () => {
+          'use server';
+          await deleteMenuItem(id, storeId);
+        }}>
+          <button type="submit" className="w-full rounded-lg bg-red-500/10 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-500/20">
+            ลบเมนูนี้ถาวร
+          </button>
         </form>
       </section>
     </div>

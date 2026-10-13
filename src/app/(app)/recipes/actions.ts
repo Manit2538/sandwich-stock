@@ -2,6 +2,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { requireStore } from '@/lib/supabase/queries';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
 
 export async function createMenuItem(_prev: any, fd: FormData) {
   const { storeId } = await requireStore();
@@ -64,4 +66,15 @@ export async function updateMenuPrices(fd: FormData) {
 
   revalidatePath(`/recipes/${menuId}`);
   revalidatePath('/recipes');
+}
+
+export async function deleteMenuItem(menuItemId: string, storeId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('delete_menu_item', {
+    p_menu_item_id: menuItemId,
+    p_store_id: storeId,
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath('/recipes');
+  redirect('/recipes');
 }

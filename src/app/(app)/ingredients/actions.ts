@@ -23,12 +23,14 @@ export async function createIngredient(_prev: any, fd: FormData) {
   return { ok: 'เพิ่มวัตถุดิบเรียบร้อย' };
 }
 
-export async function adjustStock(_prev: any, fd: FormData) {
+export async function adjustStock(a: any, b?: FormData) {
+  const fd: FormData = b instanceof FormData ? b : (a as FormData);
+
   await requireStore();
   const supabase = await createClient();
   const { error } = await supabase.rpc('fn_adjust_stock', {
     p_ingredient_id: String(fd.get('ingredient_id')),
-    p_counted_qty: String(fd.get('counted_qty')),
+    p_counted_qty: Number(fd.get('counted_qty') || 0),
     p_reason: String(fd.get('reason') || 'นับสต็อกจริง'),
   });
   if (error) return { error: `ปรับสต็อกไม่สำเร็จ: ${error.message}` };
@@ -36,12 +38,14 @@ export async function adjustStock(_prev: any, fd: FormData) {
   return { ok: 'ปรับสต็อกเรียบร้อย' };
 }
 
-export async function recordWaste(_prev: any, fd: FormData) {
+export async function recordWaste(a: any, b?: FormData) {
+  const fd: FormData = b instanceof FormData ? b : (a as FormData);
+
   await requireStore();
   const supabase = await createClient();
   const { error } = await supabase.rpc('fn_record_waste', {
     p_ingredient_id: String(fd.get('ingredient_id')),
-    p_qty: String(fd.get('qty')),
+    p_qty: Number(fd.get('qty') || 0),
     p_reason: String(fd.get('reason')),
     p_note: (fd.get('note') as string) || null,
   });
@@ -58,3 +62,4 @@ export async function deleteIngredient(fd: FormData) {
     .eq('id', String(fd.get('id'))).eq('store_id', storeId);
   revalidatePath('/ingredients');
 }
+

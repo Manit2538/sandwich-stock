@@ -56,7 +56,9 @@ export default function DangerZone({ storeId }: { storeId: string }) {
       return;
     }
 
-    alert(`เรียบร้อย — ลบไป ${data ?? 0} รายการ`);
+    alert(`เรียบร้อย — ลบไป ${data} รายการ`);
+    window.location.reload();
+
     setPending(null);
     setConfirmText('');
   }
